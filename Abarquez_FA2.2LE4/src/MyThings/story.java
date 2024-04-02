@@ -44,10 +44,20 @@ public class story extends javax.swing.JFrame {
                 image = new ImageIcon(getClass().getResource("/MyImages/meWow.png"));
                 break;
             case 1:
-                image = new ImageIcon(getClass().getResource("/MyImages/meHungry.png"));
+                image = new ImageIcon(getClass().getResource("/MyImages/meStarving.png"));
                 break;
             case 2:
+                image = new ImageIcon(getClass().getResource("/MyImages/eating.jpg"));
+                eatingStory();
+                break;
+            case 3:
                 image = new ImageIcon(getClass().getResource("/MyImages/meFull.png"));
+                storyText = "Manuel: Ahh I’m full! Now, what should I do?"
+                        + "- Become a mermaid"
+                        + "- Get high in Baguio"
+                        + "- Become a radical dictator"
+                        + "- Become Santa Clause"
+                        + "- Ride a Ferris Wheel in 2015";
                 break;
             // Add more cases for additional story parts
         }
@@ -57,18 +67,44 @@ public class story extends javax.swing.JFrame {
         startTypingAnimation(storyText);
         // Set image for current story part
         label1.setIcon(image);
+        // Disable the nextButton while typing animation is in progress
+        nextButton.setEnabled(false);
     }
     
+    private void eatingStory (){
+        nextButton.setEnabled(false);
+        // Display the question in textfield1
+        textfield1.setText("Where was this picture taken?");
+
+        // Wait for the user's answer
+        // You can add a button to submit the answer or listen for Enter key press event
+        // For simplicity, let's assume the user input is entered in textfield1
+        textfield1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String userAnswer = textfield1.getText().trim();
+
+                // Check if the user's answer is correct
+                if (userAnswer.equalsIgnoreCase("All4U")) {
+                    label2.setText("Your answer: " + userAnswer + " (Correct! You earned 1 yellow key.)");
+                    // Award 1 yellow key if the answer is correct
+                    yellowKeysCollected[userProgress] = true;
+                    nextButton.setEnabled(true);
+                } else {
+                    label2.setText("Your answer: " + userAnswer + " (Incorrect. Try again next time.)");
+                }
+            }
+        });
+    }
     private String getStoryText(int storyPart) {
         switch (storyPart) {
             case 0:
                 return "Manuel: Wow. How was that possible?";
             case 1:
                 return "Manuel: Anyways, I'm starving...";
-            case 2:
-                return "Manuel: Ahh I’m full! Now, what should I do?\n- Become a mermaid\n- Get high in Baguio\n- Become a radical dictator\n- Become Santa Clause\n- Ride a Ferris Wheel in 2015";
+                
             default:
-                return ""; // Handle other parts
+                return "";
         }
     }
     
@@ -84,6 +120,7 @@ public class story extends javax.swing.JFrame {
                 } else {
                     // Stop timer when animation completes
                     typingTimer.stop();
+                    nextButton.setEnabled(true);
                 }
             }
         });
@@ -168,6 +205,7 @@ public class story extends javax.swing.JFrame {
         textfield1 = new javax.swing.JTextField();
         label1 = new javax.swing.JLabel();
         nextButton = new javax.swing.JButton();
+        label2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -183,7 +221,6 @@ public class story extends javax.swing.JFrame {
 
         label1.setFont(new java.awt.Font("Consolas", 0, 24)); // NOI18N
         label1.setForeground(new java.awt.Color(255, 255, 255));
-        label1.setText("jLabel1");
 
         nextButton.setBackground(new java.awt.Color(0, 0, 0));
         nextButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -195,16 +232,24 @@ public class story extends javax.swing.JFrame {
             }
         });
 
+        label2.setFont(new java.awt.Font("Consolas", 0, 24)); // NOI18N
+        label2.setForeground(new java.awt.Color(255, 255, 255));
+        label2.setText("_");
+        label2.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGap(96, 96, 96)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(nextButton)
-                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(label1)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label1)
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(mainPanelLayout.createSequentialGroup()
+                            .addComponent(label2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(nextButton))
                         .addComponent(textfield1, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
@@ -213,10 +258,12 @@ public class story extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addGap(60, 60, 60)
                 .addComponent(label1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
-                .addComponent(nextButton)
-                .addGap(18, 18, 18)
-                .addComponent(textfield1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 244, Short.MAX_VALUE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label2)
+                    .addComponent(nextButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(textfield1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(55, 55, 55))
         );
 
@@ -278,6 +325,7 @@ public class story extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel label1;
+    private javax.swing.JLabel label2;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JButton nextButton;
     private javax.swing.JTextField textfield1;
