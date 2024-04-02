@@ -5,6 +5,9 @@
  */
 package MyThings;
 
+import MyApp.DinerMenu;
+import javax.swing.JFrame;
+import javax.swing.Timer;
 /**
  *
  * @author Angela
@@ -16,6 +19,19 @@ public class ml extends javax.swing.JFrame {
      */
     public ml() {
         initComponents();
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        
+        // Create a Timer that fires after 5 seconds
+        Timer timer = new Timer(9000, e -> {
+            // When the timer fires, make the ml_intro label not visible
+            ml_intro.setVisible(false);
+            this.dispose();
+            ml2.launch(ml2.class);
+        });
+
+        // Start the timer
+        timer.start();
     }
 
     /**
@@ -27,17 +43,25 @@ public class ml extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        ml_intro = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        ml_intro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MyMedia/ml_intro.gif"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(ml_intro)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(ml_intro)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -79,5 +103,6 @@ public class ml extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ml_intro;
     // End of variables declaration//GEN-END:variables
 }

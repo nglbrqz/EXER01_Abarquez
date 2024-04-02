@@ -330,7 +330,7 @@ public class DinerMenu extends javax.swing.JFrame {
         // Close the application
         //System.exit(0);
         // If an order has been placed, create an instance of OrderDisplay and display it
-            Exit exitWindow = new Exit();
+            Exit exitWindow = new Exit(this);
             exitWindow.setVisible(true);
     }//GEN-LAST:event_file_exitActionPerformed
 

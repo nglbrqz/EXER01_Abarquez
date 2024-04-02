@@ -5,8 +5,10 @@
  */
 package MyLibs;
 
+import MyApp.DinerMenu;
 import java.awt.Font;
 import javax.swing.JFrame;
+import MyThings.ml;
 
 /**
  *
@@ -14,10 +16,13 @@ import javax.swing.JFrame;
  */
 public class Exit extends javax.swing.JFrame {
 
+    private DinerMenu dinerMenu;
+    
     /**
      * Creates new form Exit
      */
-    public Exit() {
+    public Exit(DinerMenu dinerMenu) {
+        this.dinerMenu = dinerMenu;
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -120,10 +125,10 @@ public class Exit extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // Switch to a different frame (surprise gift game)
-        //SurpriseGiftFrame surpriseGiftFrame = new SurpriseGiftFrame();
-        //surpriseGiftFrame.setVisible(true);
-        //this.dispose(); // Close the current Exit frame
+        this.dispose();
+        ml.main(new String[]{});
+        // Set DinerMenu frame to invisible
+        dinerMenu.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -156,7 +161,8 @@ public class Exit extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Exit().setVisible(true);
+                DinerMenu dinerMenu = new DinerMenu();
+                new Exit(dinerMenu).setVisible(true);
             }
         });
     }
