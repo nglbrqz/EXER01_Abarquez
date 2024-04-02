@@ -19,6 +19,7 @@ public class DinerMenu extends javax.swing.JFrame {
     public DinerMenu() {
         initComponents();
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         
         // Initialize menu items and prices
         menuPrices.put("Chicken Salad", 100);
@@ -326,7 +327,10 @@ public class DinerMenu extends javax.swing.JFrame {
 
     private void file_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_file_exitActionPerformed
         // Close the application
-        System.exit(0);
+        //System.exit(0);
+        // If an order has been placed, create an instance of OrderDisplay and display it
+            Exit exitWindow = new Exit();
+            exitWindow.setVisible(true);
     }//GEN-LAST:event_file_exitActionPerformed
 
     private void edit_menuSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_menuSelectionActionPerformed
