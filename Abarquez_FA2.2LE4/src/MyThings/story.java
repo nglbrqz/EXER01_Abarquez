@@ -7,7 +7,9 @@ package MyThings;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 /**
@@ -16,13 +18,12 @@ import javax.swing.Timer;
  */
 public class story extends javax.swing.JFrame {
 
-    // Variable to keep track of the current part of the story
-    private int storyPart = 0;
-    private int userProgress = 0; // Variable to track user progress
-
-    // Timer for text typing animation
+     private int storyPart = 0;
+    private int userProgress = 0; 
     private Timer typingTimer;
     private int textIndex = 0;
+    private boolean[] yellowKeysCollected = new boolean[3];
+    private boolean[] whiteKeysCollected = new boolean[3];
     
     public story() {
         initComponents();
@@ -34,31 +35,46 @@ public class story extends javax.swing.JFrame {
     
     // Method to display the next part of the story
     private void displayNextText() {
-        String storyText = "";
+        String storyText = getStoryText(storyPart);
+        ImageIcon image = null;
 
+        // Set image for current story part
         switch (storyPart) {
             case 0:
-                storyText = "Manuel: Wow. How was that possible?";
+                image = new ImageIcon(getClass().getResource("/MyImages/meWow.png"));
                 break;
             case 1:
-                storyText = "Manuel: Anyways, I feel starving...";
+                image = new ImageIcon(getClass().getResource("/MyImages/meHungry.png"));
                 break;
             case 2:
-                if (userProgress >= 1) { // Check user progress
-                    storyText = "Manuel: Ahh I’m full! Now, what should I do?\n- Become a mermaid\n- Get high in Baguio\n- Become a radical dictator\n- Become Santa Clause\n- Ride a Ferris Wheel in 2015";
-                } else {
-                    storyText = "Manuel: Ahh I’m full! Now, what should I do?";
-                }
+                image = new ImageIcon(getClass().getResource("/MyImages/meFull.png"));
                 break;
-            // Add more cases for other parts of the story
+            // Add more cases for additional story parts
         }
 
+        
+        textIndex = 0;
         startTypingAnimation(storyText);
+        // Set image for current story part
+        label1.setIcon(image);
+    }
+    
+    private String getStoryText(int storyPart) {
+        switch (storyPart) {
+            case 0:
+                return "Manuel: Wow. How was that possible?";
+            case 1:
+                return "Manuel: Anyways, I'm starving...";
+            case 2:
+                return "Manuel: Ahh I’m full! Now, what should I do?\n- Become a mermaid\n- Get high in Baguio\n- Become a radical dictator\n- Become Santa Clause\n- Ride a Ferris Wheel in 2015";
+            default:
+                return ""; // Handle other parts
+        }
     }
     
     // Method to start text typing animation
     private void startTypingAnimation(String text) {
-        typingTimer = new Timer(50, new ActionListener() {
+        typingTimer = new Timer(60, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (textIndex <= text.length()) {
@@ -90,6 +106,52 @@ public class story extends javax.swing.JFrame {
         // Update story part after choice
         storyPart++;
         // Display next part of the story
+        displayNextText();
+    }
+    
+    private void checkEndings() {
+        // Check if all yellow keys collected
+        boolean allYellowKeysCollected = true;
+        for (boolean keyCollected : yellowKeysCollected) {
+            if (!keyCollected) {
+                allYellowKeysCollected = false;
+                break;
+            }
+        }
+
+        if (allYellowKeysCollected) {
+            // Display Food ending
+            JOptionPane.showMessageDialog(this, "Food ending");
+            // Give white key
+            whiteKeysCollected[0] = true;
+        }
+
+        // Check if all white keys collected
+        boolean allWhiteKeysCollected = true;
+        for (boolean keyCollected : whiteKeysCollected) {
+            if (!keyCollected) {
+                allWhiteKeysCollected = false;
+                break;
+            }
+        }
+
+        if (allWhiteKeysCollected) {
+            // Display Real ending
+            JOptionPane.showMessageDialog(this, "Real ending");
+            // Reset progress
+            resetGame();
+        }
+    }
+
+    private void resetGame() {
+        // Reset story
+        storyPart = 0;
+        userProgress = 0;
+        // Reset key collections
+        for (int i = 0; i < yellowKeysCollected.length; i++) {
+            yellowKeysCollected[i] = false;
+            whiteKeysCollected[i] = false;
+        }
         displayNextText();
     }
 
@@ -175,22 +237,7 @@ public class story extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-        switch (storyPart) {
-            case 0:
-                // Move to the next part of the story
-                storyPart++;
-                break;
-            case 1:
-                // Move to the next part of the story
-                storyPart++;
-                break;
-            case 2:
-                // Handle user choice when they've reached the part with choices
-                handleChoice("Get high in Baguio"); // Example choice
-                break;
-            // Add more cases for other parts of the story
-        }
-        // Display the next part of the story
+        storyPart++;
         displayNextText();
     }//GEN-LAST:event_nextButtonActionPerformed
 
