@@ -5,6 +5,9 @@
  */
 package MyLibs;
 
+import java.awt.Font;
+import javax.swing.JFrame;
+
 /**
  *
  * @author Angela
@@ -16,6 +19,8 @@ public class Exit extends javax.swing.JFrame {
      */
     public Exit() {
         initComponents();
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     }
 
     /**
@@ -34,8 +39,10 @@ public class Exit extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Are you sure you want to exit?");
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setText("Yes");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -43,21 +50,28 @@ public class Exit extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton2.setText("No");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(96, 96, 96)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(82, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
                         .addComponent(jButton1)
-                        .addGap(83, 83, 83)
-                        .addComponent(jButton2)))
-                .addContainerGap(121, Short.MAX_VALUE))
+                        .addGap(72, 72, 72)
+                        .addComponent(jButton2))
+                    .addComponent(jLabel1))
+                .addGap(74, 74, 74))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -66,8 +80,8 @@ public class Exit extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
 
@@ -88,8 +102,29 @@ public class Exit extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // Move the Exit frame to a different part of the screen
+        int screenWidth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+        int screenHeight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+        int frameWidth = this.getWidth();
+        int frameHeight = this.getHeight();
+
+        // Generate random coordinates for the new location
+        int newX = (int) (Math.random() * (screenWidth - frameWidth));
+        int newY = (int) (Math.random() * (screenHeight - frameHeight));
+
+        // Set the new location
+        this.setLocation(newX, newY);
+        
+        // Increase the size of the "No" button
+        jButton2.setFont(new Font(jButton2.getFont().getName(), jButton2.getFont().getStyle(), jButton2.getFont().getSize() + 3));
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // Switch to a different frame (surprise gift game)
+        //SurpriseGiftFrame surpriseGiftFrame = new SurpriseGiftFrame();
+        //surpriseGiftFrame.setVisible(true);
+        //this.dispose(); // Close the current Exit frame
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
